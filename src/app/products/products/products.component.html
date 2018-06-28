@@ -1,16 +1,22 @@
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h3>Product List</h3>
+    <h3>{{pageTitle}}</h3>
   </div>
   <div class="panel-body">
     <table *ngIf="products && products.length" class="table table-bordered table-hover">
       <tr>
+        <th>
+          <button class="btn btn-success" (click)="toggleImage()">Hide Image</button>
+        </th>
         <th>Product Name</th>
         <th>Product code</th>
         <th>Price</th>
         <th>Rating</th>
       </tr>
       <tr *ngFor=" let product of products ">
+        <td>
+          <img [src]="product.imageUrl" style="width: 50px;" />
+        </td>
         <td>
           <a>
             {{product.productName}}

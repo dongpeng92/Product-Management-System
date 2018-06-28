@@ -7,14 +7,14 @@
         <form>
           <div class="form-group">
             <label for="email">Email address</label>
-            <input type="email" name="email" class="form-control" id="email" placeholder="Email">
+            <input type="email" name="email" [(ngModel)]="loginform.email" class="form-control" id="email" placeholder="Email">
           </div>
           <div class="form-group">
             <label for="Password">Password</label>
-            <input type="password" name="password" class="form-control" id="Password" placeholder="Password">
+            <input type="password" name="password" [(ngModel)]="loginform.password" class="form-control" id="Password" placeholder="Password">
           </div>
-          <button type="submit" class="btn btn-default pull-right" (click)="login()">Login</button>
-          <button type="submit" class="btn btn-default" (click)="register()">Register</button>
+          <button type="submit" class="btn btn-success pull-right" (click)="login()">Login</button>
+          <button type="submit" class="btn btn-primary" (click)="register()">Register</button>
         </form>
       </div>
     </div>

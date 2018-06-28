@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductsComponent implements OnInit {
 
+  pageTitle : String = "Product List";
+
   products : any = [
     {
       "productId": 1,
@@ -65,4 +67,7 @@ constructor() { }
   ngOnInit() {
   }
 
+  toggleImage() {
+
+  }
 }

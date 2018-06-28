@@ -1,7 +1,8 @@
 var express = require('express'),
     app = express(),
     cors = require('cors'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    jwt = require('jsonwebtoken');
 
 var mongoose = require('mongoose');
 mongoose.Promise = require('q').Promise;
@@ -21,8 +22,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 var user_schema = mongoose.Schema({
-  email: String,
   username: String,
+  email: String,
   password: String,
 });
 var user_model = mongoose.model('users', user_schema);
@@ -40,6 +41,25 @@ app.post('/register', function (req, res) {
     }
   });
 
+});
+
+app.post('/authenticate', function (req, res) {
+  console.log(req.body);
+  var token = jwt.sign({'uname': req.body.username}, 'marlabs-secret-key', {
+    expiresIn: '1h'
+  });
+  user_model.findOne({'username': req.body.username, 'password': req.body.password}, function (err, user) {
+    if (!err) {
+      res.send({
+        isLoggedIn: true,
+        token: token
+      });
+    } else {
+      res.send({
+        isLoggedIn: false
+      });
+    }
+  });
 });
 
 app.listen(3000, function () {

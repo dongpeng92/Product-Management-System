@@ -11,6 +11,9 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { NavigationComponent } from './auth/navigation/navigation.component';
 import { AuthService } from './auth/auth.service';
+import { CookieService } from 'ngx-cookie-service';
+import { AuthGuard } from './auth/auth.guard';
+import { AddComponent } from './products/add/add.component';
 
 @NgModule({
   declarations: [
@@ -19,14 +22,16 @@ import { AuthService } from './auth/auth.service';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    NavigationComponent
+    NavigationComponent,
+    AddComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     RouterModule.forRoot([
-      {path: "products", component: ProductsComponent},
+      {path: "products", component: ProductsComponent, canActivate: [AuthGuard]},
+      {path: "add", component: AddComponent, canActivate: [AuthGuard]},
       {path: "home", component: HomeComponent},
       {path: "login", component: LoginComponent},
       {path: "register", component: RegisterComponent},
@@ -34,7 +39,7 @@ import { AuthService } from './auth/auth.service';
       {path: "**", redirectTo: "home"}
     ])
   ],
-  providers: [AuthService],
+  providers: [AuthService, CookieService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
