@@ -1,0 +1,28 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3>Product List</h3>
+  </div>
+  <div class="panel-body">
+    <table *ngIf="products && products.length" class="table table-bordered table-hover">
+      <tr>
+        <th>Product Name</th>
+        <th>Product code</th>
+        <th>Price</th>
+        <th>Rating</th>
+      </tr>
+      <tr *ngFor=" let product of products ">
+        <td>
+          <a>
+            {{product.productName}}
+          </a>
+        </td>
+        <td>{{product.productCode}}</td>
+        <td>{{product.price}}</td>
+        <td>{{product.starRating}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+
+

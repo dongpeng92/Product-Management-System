@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+    <div class="panel panel-primary">
+      <div class="panel-heading">Register Page</div>
+      <div class="panel-body">
+        <form>
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" name="email" [(ngModel)]="regform.email" class="form-control" id="email" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" name="name" [(ngModel)]="regform.name" class="form-control" id="name" placeholder="Full Name">
+          </div>
+          <div class="form-group">
+            <label for="Password">Password</label>
+            <input type="password"name="password"  [(ngModel)]="regform.password" class="form-control" id="Password" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-success pull-right" (click)="register()">Register</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-1"></div>
+</div>
