@@ -1,30 +1,38 @@
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h3>{{pageTitle}}</h3>
+    <h4>{{pageTitle}}</h4>
   </div>
   <div class="panel-body">
-    <table *ngIf="products && products.length" class="table table-bordered table-hover">
+    <div>
+      <div class="alert alert-success" *ngIf="filterBy">
+        Filter By: {{filterBy}}
+      </div>
+      <input [(ngModel)]="filterBy" type="text" class="form-control" placeholder="Filter products">
+    </div>
+    <table *ngIf="products && products.length" class="table table-hover">
       <tr>
         <th>
-          <button class="btn btn-success" (click)="toggleImage()">Hide Image</button>
+          <button class="btn btn-success" (click)="toggleImage()">{{showHideImg ? 'Hide Image' : 'Show Image'}}</button>
         </th>
         <th>Product Name</th>
         <th>Product code</th>
         <th>Price</th>
         <th>Rating</th>
       </tr>
-      <tr *ngFor=" let product of products ">
+      <tr *ngFor=" let product of products | products: filterBy">
         <td>
-          <img [src]="product.imageUrl" style="width: 50px;" />
+          <img *ngIf="showHideImg" [src]="product.imageUrl" style="width: 50px;" />
         </td>
         <td>
-          <a>
+          <a href="#" [routerLink]="['/products', product.productCode]">
             {{product.productName}}
           </a>
         </td>
         <td>{{product.productCode}}</td>
         <td>{{product.price}}</td>
-        <td>{{product.starRating}}</td>
+        <td >
+          <app-rating [rating]="product.starRating"></app-rating>
+        </td>
       </tr>
     </table>
   </div>

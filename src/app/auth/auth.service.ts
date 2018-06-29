@@ -27,6 +27,7 @@ export class AuthService {
     this._http.post('http://localhost:3000/authenticate', login_details).subscribe((data:any) => {
       if(data.isLoggedIn) {
         this._cookieService.set('token', data.token);
+        this._cookieService.set('toggle', data.isLoggedIn);
         this.$authObservable.next(data.isLoggedIn);
         this._router.navigate(['/home']);
       } else {
@@ -41,6 +42,7 @@ export class AuthService {
 
   logout() {
     this._cookieService.delete('token');
+    this._cookieService.delete('toggle');
     this.$authObservable.next(false);
     this._router.navigate(['/home']);
   }

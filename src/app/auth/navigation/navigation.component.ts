@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-navigation',
@@ -8,9 +9,10 @@ import { AuthService } from '../auth.service';
 })
 export class NavigationComponent implements OnInit {
 
-  toggleLink : Boolean = false;
+  constructor(private _authService : AuthService, private _cookieService : CookieService ) { }
 
-  constructor(private _authService : AuthService) { }
+  toggleLink : Boolean = false;
+  // toggleLink : Boolean = this._cookieService.get('toggle');
 
   ngOnInit() {
     this._authService.$authObservable.subscribe((data : any) => {
