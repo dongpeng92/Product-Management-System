@@ -19,6 +19,7 @@ import { ProductsPipe } from './products/products.pipe';
 import { RatingComponent } from './products/rating/rating.component';
 import { DetailsComponent } from './products/details/details.component';
 import { AuthinterceptorService } from './auth/authinterceptor.service';
+import { UploadComponent } from './products/upload/upload.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AuthinterceptorService } from './auth/authinterceptor.service';
     AddComponent,
     ProductsPipe,
     RatingComponent,
-    DetailsComponent
+    DetailsComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +49,7 @@ import { AuthinterceptorService } from './auth/authinterceptor.service';
       {path: "register", component: RegisterComponent},
       {path: "", redirectTo: "home", pathMatch: "full"},
       {path: "**", redirectTo: "home"}
-    ])
+    ]),
   ],
   providers: [AuthService, CookieService, AuthGuard,{
     provide: HTTP_INTERCEPTORS,

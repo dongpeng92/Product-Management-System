@@ -1,41 +1,78 @@
 <div class="container">
   <div class="col-md-1"></div>
   <div class="col-md-10">
-    <form>
+    <form [formGroup]="productForm" (ngSubmit)="createProduct()">
       <div class="form-group">
-        <label for="productName">Product Name</label>
-        <input type="text" class="form-control" id="productName" placeholder="Product Name">
+        <label for="productId">Product Id</label>
+        <input type="number" class="form-control" id="productId" placeholder="Product Id"
+               formControlName="productId">
+        <div *ngIf="!productForm.get('productId').valid && (productForm.get('productId').touched)">
+          <div class="alert alert-danger" *ngIf="productForm.get('productId').errors.required">Please enter Product Id</div>
+          <div class="alert alert-danger" *ngIf="productForm.get('productId').errors.minlength">Product Name should be 1 char long</div>
+        </div>
       </div>
       <div class="form-group">
         <label for="productName">Product Name</label>
-        <input type="text" class="form-control" id="productName" placeholder="Product Name">
+        <input type="text" class="form-control" id="productName" placeholder="Product Name"
+               formControlName="productName">
+        <div *ngIf="!productForm.get('productName').valid && (productForm.get('productName').touched)">
+          <div class="alert alert-danger" *ngIf="productForm.get('productName').errors.required">Please enter Product Name</div>
+          <div class="alert alert-danger" *ngIf="productForm.get('productName').errors.minlength">Product Name should be 5 char long</div>
+        </div>
       </div>
       <div class="form-group">
-        <label for="code">Product Code</label>
-        <input type="code" class="form-control" id="code" placeholder="Product Code">
+        <label for="productCode">Product Code</label>
+        <input type="text" class="form-control" id="productCode" placeholder="Product Code"
+               formControlName="productCode">
+        <div *ngIf="!productForm.get('productCode').valid && (productForm.get('productCode').touched)">
+          <div class="alert alert-danger" *ngIf="productForm.get('productCode').errors.required">Please enter Product Code</div>
+          <div class="alert alert-danger" *ngIf="productForm.get('productCode').errors.minlength">Product Code should be 5 char long</div>
+        </div>
       </div>
       <div class="form-group">
         <label for="releaseDate">Release Date</label>
-        <input type="releaseDate" class="form-control" id="releaseDate" placeholder="Release Date">
+        <input type="text" class="form-control" id="releaseDate" placeholder="Release Date"
+               formControlName="releaseDate">
+        <div *ngIf="!productForm.get('releaseDate').valid && (productForm.get('releaseDate').touched)">
+          <div class="alert alert-danger" *ngIf="productForm.get('releaseDate').errors.required">Please enter Release Date</div>
+          <div class="alert alert-danger" *ngIf="productForm.get('releaseDate').errors.minlength">Release Date should be 5 char long</div>
+        </div>
       </div>
       <div class="form-group">
         <label for="description">Description</label>
-        <input type="description" class="form-control" id="description" placeholder="Description">
+        <input type="text" class="form-control" id="description" placeholder="Description"
+               formControlName="description">
+        <div *ngIf="!productForm.get('description').valid && (productForm.get('description').touched)">
+          <div class="alert alert-danger" *ngIf="productForm.get('description').errors.required">Please enter Description</div>
+          <div class="alert alert-danger" *ngIf="productForm.get('description').errors.minlength">Description should be 10 char long</div>
+        </div>
       </div>
       <div class="form-group">
-        <label for="code">Price</label>
-        <input type="price" class="form-control" id="price" placeholder="Price">
+        <label for="price">Price</label>
+        <input type="number" class="form-control" id="price" placeholder="Price"
+               formControlName="price">
+        <div *ngIf="!productForm.get('price').valid && (productForm.get('price').touched)">
+          <div class="alert alert-danger" *ngIf="productForm.get('price').errors.required">Please enter Price</div>
+          <div class="alert alert-danger" *ngIf="productForm.get('price').errors.minlength">Price should be 1 char long</div>
+        </div>
       </div>
       <div class="form-group">
-        <label for="rating">Rating</label>
-        <input type="rating" class="form-control" id="rating" placeholder="Rating">
+        <label for="starRating">Rating</label>
+        <input type="number" class="form-control" id="starRating" placeholder="Rating"
+               formControlName="starRating">
+        <div *ngIf="!productForm.get('starRating').valid && (productForm.get('starRating').touched)">
+          <div class="alert alert-danger" *ngIf="productForm.get('starRating').errors.required">Please enter Rating</div>
+          <div class="alert alert-danger" *ngIf="productForm.get('starRating').errors.minlength">Rating should be 1 char long</div>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="image">File input</label>
-        <input type="file" id="image">
-        <p class="help-block">Upload product Image here.</p>
-      </div>
-      <button type="submit" class="btn btn-default">Submit</button>
+      <!--<div class="form-group">-->
+        <!--<label for="imageUrl">File input(option)</label>-->
+        <!--<input type="file" id="imageUrl" (change)="onFileSelected($event)" />-->
+        <!--<button class="btn btn-default" type="button" (click)="onUpload()">Upload</button>-->
+        <!--<p class="help-block">Upload product Image here.</p>-->
+      <!--</div>-->
+      <app-upload (urlToAdd)="UrlFn($event)"></app-upload>
+      <button type="submit" class="btn btn-default" [disabled]="!productForm.valid">Submit</button>
     </form>
   </div>
   <div class="col-md-1"></div>

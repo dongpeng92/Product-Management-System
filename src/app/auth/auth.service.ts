@@ -28,7 +28,7 @@ export class AuthService {
       if(data.isLoggedIn) {
         this._cookieService.set('token', data.token);
         this._cookieService.set('toggle', data.isLoggedIn);
-        this.$authObservable.next(data.isLoggedIn);
+        this.$authObservable.next(data.token);
         this._router.navigate(['/home']);
       } else {
         alert("Invalid Username or Password");

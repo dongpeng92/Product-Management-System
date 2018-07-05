@@ -4,7 +4,8 @@ import { ProductsService } from '../products.service';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css']
+  styleUrls: ['./products.component.css'],
+  providers: [ProductsService]
 })
 export class ProductsComponent implements OnInit {
 
@@ -20,6 +21,7 @@ constructor(private _productService : ProductsService) { }
 
   ngOnInit() {
     this._productService.getproducts().subscribe((data:any) => {
+      console.log(data);
       this.products = data;
     })
   }

@@ -1,8 +1,17 @@
 var express = require('express'),
     app = express(),
     cors = require('cors'),
+    fs = require('fs'),
     bodyParser = require('body-parser'),
+    formidable = require('formidable'),
+    uuidV1 = require("uuid/v1"),
     jwt = require('jsonwebtoken');
+
+var UPLOAD_FOLDER = '/img/';
+
+var assets_new = 'public';
+
+app.use(express.static(assets_new));
 
 var mongoose = require('mongoose');
 mongoose.Promise = require('q').Promise;
@@ -29,7 +38,7 @@ var user_schema = mongoose.Schema({
 var user_model = mongoose.model('users', user_schema);
 
 var product_schema = mongoose.Schema({
-  "productId": String,
+  "productId": Number,
   "productName": String,
   "productCode": String,
   "releaseDate": String,
@@ -39,7 +48,6 @@ var product_schema = mongoose.Schema({
   "imageUrl": String
 });
 var product_model = mongoose.model('products', product_schema);
-
 
 app.post('/register', function (req, res) {
   console.log(req.body);
@@ -75,7 +83,7 @@ app.post('/authenticate', function (req, res) {
 });
 
 app.use(function (req, res, next) {
-  var token = req.headers['authtoken'];
+  var token = req.body.authtoken || req.query.authtoken || req.headers['authtoken'];
   jwt.verify(token, 'marlabs-secret-key', function (err, decoded) {
     if (err) {
       res.send({
@@ -90,6 +98,7 @@ app.use(function (req, res, next) {
 });
 
 app.get('/getproducts', function (req, res) {
+  console.log(req.decoded);
   product_model.find({}, function (err, docs) {
     if (!err) {
       console.log("products find!");
@@ -106,6 +115,68 @@ app.get('/findproduct', function (req, res) {
       console.log("product match!");
       console.log(product);
       res.send(product);
+    }
+  });
+});
+
+app.post('/uploadFile', function (req, res) {
+  var form = new formidable.IncomingForm();
+  form.encoding = 'utf-8';
+  form.uploadDir = UPLOAD_FOLDER;
+  form.returnDir = '../../../../' + UPLOAD_FOLDER;
+  form.keepExtensions = true;
+  form.maxFieldsSize = 2 * 1024 * 1024;
+
+  form.parse(req, function(err, fields, files) {
+
+    if (err) {
+      res.send(err);
+    }
+
+    var extName = '';
+    switch (files.imageUrl.type) {
+      case 'image/pjpeg':
+        extName = 'jpg';
+        break;
+      case 'image/jpeg':
+        extName = 'jpg';
+        break;
+      case 'image/png':
+        extName = 'png';
+        break;
+      case 'image/x-png':
+        extName = 'png';
+        break;
+      case 'image/gif':
+        extName = 'gif';
+        break;
+    }
+
+    if (extName.length == 0) {
+      res.send({
+        err: "Invalid Image Format."
+      });
+    }
+
+    var fileName = uuidV1() + '.' + extName;
+    var newPath = form.uploadDir + fileName;
+    var returnPath = form.returnDir + fileName;
+
+    fs.renameSync(files.imageUrl.path, newPath);
+
+    res.send({"imageUrl": returnPath});
+  });
+});
+
+app.post('/addproduct', function (req, res) {
+  console.log(req.body);
+  var new_product = product_model(req.body);
+  new_product.save(function (err) {
+    if (!err) {
+      console.log(req.body);
+      res.send({
+        flg: true
+      });
     }
   });
 });

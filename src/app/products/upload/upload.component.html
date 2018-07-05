@@ -1,0 +1,6 @@
+<div class="form-group">
+  <label for="imageUrl">File input(option)</label>
+  <input type="file" id="imageUrl" #Image accept="image/" (change)="onFileSelected($event)" />
+  <button class="btn btn-default" type="button" (click)="onUpload()">Upload</button>
+  <p class="help-block">Upload product Image here.</p>
+</div>

@@ -12,9 +12,13 @@ export class NavigationComponent implements OnInit {
   constructor(private _authService : AuthService, private _cookieService : CookieService ) { }
 
   toggleLink : Boolean = false;
-  // toggleLink : Boolean = this._cookieService.get('toggle');
 
   ngOnInit() {
+    if(this._cookieService.get('toggle')) {
+      this.toggleLink = true;
+    } else {
+      this.toggleLink = false;
+    }
     this._authService.$authObservable.subscribe((data : any) => {
       console.log(data);
       this.toggleLink = data;
