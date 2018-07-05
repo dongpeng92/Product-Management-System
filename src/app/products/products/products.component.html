@@ -21,7 +21,7 @@
       </tr>
       <tr *ngFor=" let product of products | products: filterBy">
         <td>
-          <img *ngIf="showHideImg" src="http://localhost:3000"+{{product.imageUrl}} style="width: 50px;" />
+          <img *ngIf="showHideImg" src="{{product.imageUrl}}" style="width: 50px;" />
         </td>
         <td>
           <a href="#" [routerLink]="['/products', product.productCode]">

@@ -122,8 +122,8 @@ app.get('/findproduct', function (req, res) {
 app.post('/uploadFile', function (req, res) {
   var form = new formidable.IncomingForm();
   form.encoding = 'utf-8';
-  form.uploadDir = UPLOAD_FOLDER;
-  form.returnDir = '../../../../' + UPLOAD_FOLDER;
+  form.uploadDir = assets_new + UPLOAD_FOLDER;
+  form.returnDir = UPLOAD_FOLDER;
   form.keepExtensions = true;
   form.maxFieldsSize = 2 * 1024 * 1024;
 
@@ -160,7 +160,7 @@ app.post('/uploadFile', function (req, res) {
 
     var fileName = uuidV1() + '.' + extName;
     var newPath = form.uploadDir + fileName;
-    var returnPath = form.returnDir + fileName;
+    var returnPath = 'http://localhost:3000' + form.returnDir + fileName;
 
     fs.renameSync(files.imageUrl.path, newPath);
 
